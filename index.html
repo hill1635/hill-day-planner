@@ -21,50 +21,51 @@
   </header>
   <div class="container">
     <div class="time-block">
-      <div class="row" id="hour-1" data-time="9:00 AM">
-        <time class="hour">9AM</time>
-        <textarea id="text-1"></textarea>
-        <button class="saveBtn">Save</button>
+      <!-- Something wrong with 9AM -->
+      <div class="row" id="hour-1" data-time="09:00 AM">
+        <div class="hour">9AM</div>
+        <textarea id="text-1" type="text"></textarea>
+        <button class="saveBtn" id="btn-1">Save</button>
       </div>
       <div class="row" id="hour-2" data-time="10:00 AM">
         <div class="hour">10AM</div>
         <textarea id="text-2"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-2">Save</button>
       </div>
       <div class="row" id="hour-3" data-time="11:00 AM">
         <div class="hour">11AM</div>
         <textarea id="text-3"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-3">Save</button>
       </div>
       <div class="row" id="hour-4" data-time="12:00 PM">
         <div class="hour">12PM</div>
         <textarea id="text-4"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-4">Save</button>
       </div>
       <div class="row" id="hour-5" data-time="1:00 PM">
         <div class="hour">1PM</div>
         <textarea id="text-5"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-5">Save</button>
       </div>
       <div class="row" id="hour-6" data-time="2:00 PM">
         <div class="hour">2PM</div>
         <textarea id="text-6"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-6">Save</button>
       </div>
       <div class="row" id="hour-7" data-time="3:00 PM">
         <div class="hour">3PM</div>
         <textarea id="text-7"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-7">Save</button>
       </div>
       <div class="row" id="hour-8" data-time="4:00 PM">
-        <div class="hour">6PM</div>
+        <div class="hour">4PM</div>
         <textarea id="text-8"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-8">Save</button>
       </div>
       <div class="row" id="hour-9" data-time="5:00 PM">
         <div class="hour">5PM</div>
         <textarea id="text-9"></textarea>
-        <button class="saveBtn">Save</button>
+        <button class="saveBtn" id="btn-9">Save</button>
       </div>
     </div>
   </div>
@@ -72,33 +73,47 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script type="text/javascript">
-    var date = moment().format('dddd MMMM Do');
-    var currentDay = $("#currentDay");
-    currentDay.text(date);
 
-    var time = moment().format('LT');
-    console.log(time);
+    $(document).ready(function () {
 
-    // 9AM calculates as greater than at 1PM for some reason.
-    for (var i = 1; i < 10; i++) {
-      var timeValue = $("#hour-" + [i]).attr("data-time");
-      console.log(timeValue);
-      var nextIndex = [i + 1];
-      var nextTime = $("#hour-" + nextIndex).attr("data-time");
-      console.log("next time: " + nextTime);
-      var textArea = $("#text-" + [i]);
-      console.log(textArea);
-      if (time > timeValue) {
-        $(textArea).attr("class", "past");
-      }
-      if (time >= timeValue && time < nextTime) {
-        $(textArea).attr("class", "present");
-      }
-      if (time < timeValue) {
-        $(textArea).attr("class", "future");
-      }
-    }
+      //Gets current day and time
+      var date = moment().format('dddd MMMM Do');
+      var currentDay = $("#currentDay");
+      currentDay.text(date);
 
+      var time = moment().format('LT');
+      console.log(time);
+
+      // Colors areas based on time.
+      // 9AM calculates as greater than at 1PM for some reason. 10AM works fine.
+      for (var i = 1; i < 10; i++) {
+        var timeValue = $("#hour-" + [i]).attr("data-time");
+        console.log(timeValue);
+        var nextIndex = [i + 1];
+        var nextTime = $("#hour-" + nextIndex).attr("data-time");
+        console.log("next time: " + nextTime);
+        var textArea = $("#text-" + [i]);
+        console.log(textArea);
+        if (time > timeValue) {
+          $(textArea).attr("class", "past");
+        }
+        if (time >= timeValue && time < nextTime) {
+          $(textArea).attr("class", "present");
+        }
+        if (time < timeValue) {
+          $(textArea).attr("class", "future");
+        }
+      }
+
+      //Save button to each textarea.
+      for (var i = 1; i < 10; i++) {
+        $("#btn-" + [i]).on("click", function () {
+          console.log("this button works");
+
+          // localStorage.setItem("Task #" + [i], textarea.val());
+        });
+      }
+    });
   </script>
 </body>
 
