@@ -21,48 +21,47 @@
   </header>
   <div class="container">
     <div class="time-block">
-      <!-- Something wrong with 9AM -->
-      <div class="row" id="hour-1" data-time="09:00 AM">
+      <div class="row" id="hour-1" data-time="09:00">
         <div class="hour">9AM</div>
         <textarea id="text-1" type="text"></textarea>
         <button class="saveBtn" id="btn-1">Save</button>
       </div>
-      <div class="row" id="hour-2" data-time="10:00 AM">
+      <div class="row" id="hour-2" data-time="10:00">
         <div class="hour">10AM</div>
         <textarea id="text-2"></textarea>
         <button class="saveBtn" id="btn-2">Save</button>
       </div>
-      <div class="row" id="hour-3" data-time="11:00 AM">
+      <div class="row" id="hour-3" data-time="11:00">
         <div class="hour">11AM</div>
         <textarea id="text-3"></textarea>
         <button class="saveBtn" id="btn-3">Save</button>
       </div>
-      <div class="row" id="hour-4" data-time="12:00 PM">
+      <div class="row" id="hour-4" data-time="12:00">
         <div class="hour">12PM</div>
         <textarea id="text-4"></textarea>
         <button class="saveBtn" id="btn-4">Save</button>
       </div>
-      <div class="row" id="hour-5" data-time="1:00 PM">
+      <div class="row" id="hour-5" data-time="13:00">
         <div class="hour">1PM</div>
         <textarea id="text-5"></textarea>
         <button class="saveBtn" id="btn-5">Save</button>
       </div>
-      <div class="row" id="hour-6" data-time="2:00 PM">
+      <div class="row" id="hour-6" data-time="14:00">
         <div class="hour">2PM</div>
         <textarea id="text-6"></textarea>
         <button class="saveBtn" id="btn-6">Save</button>
       </div>
-      <div class="row" id="hour-7" data-time="3:00 PM">
+      <div class="row" id="hour-7" data-time="15:00">
         <div class="hour">3PM</div>
         <textarea id="text-7"></textarea>
         <button class="saveBtn" id="btn-7">Save</button>
       </div>
-      <div class="row" id="hour-8" data-time="4:00 PM">
+      <div class="row" id="hour-8" data-time="16:00">
         <div class="hour">4PM</div>
         <textarea id="text-8"></textarea>
         <button class="saveBtn" id="btn-8">Save</button>
       </div>
-      <div class="row" id="hour-9" data-time="5:00 PM">
+      <div class="row" id="hour-9" data-time="17:00">
         <div class="hour">5PM</div>
         <textarea id="text-9"></textarea>
         <button class="saveBtn" id="btn-9">Save</button>
@@ -81,36 +80,37 @@
       var currentDay = $("#currentDay");
       currentDay.text(date);
 
-      var time = moment().format('LT');
+      var time = moment().format('HH:mm');
       console.log(time);
 
       // Colors areas based on time.
-      // 9AM calculates as greater than at 1PM for some reason. 10AM works fine.
       for (var i = 1; i < 10; i++) {
-        var timeValue = $("#hour-" + [i]).attr("data-time");
-        console.log(timeValue);
+
+        var dataTime = $("#hour-" + [i]).attr("data-time");
         var nextIndex = [i + 1];
         var nextTime = $("#hour-" + nextIndex).attr("data-time");
-        console.log("next time: " + nextTime);
         var textArea = $("#text-" + [i]);
-        console.log(textArea);
-        if (time > timeValue) {
+
+        if (time > dataTime) {
           $(textArea).attr("class", "past");
         }
-        if (time >= timeValue && time < nextTime) {
+
+        if (time >= dataTime && time < nextTime) {
           $(textArea).attr("class", "present");
         }
-        if (time < timeValue) {
+
+        if (time < dataTime) {
           $(textArea).attr("class", "future");
         }
+
       }
 
-      //Save button to each textarea.
+      //Something with "this" might help here?
       for (var i = 1; i < 10; i++) {
         $("#btn-" + [i]).on("click", function () {
-          console.log("this button works");
-
-          // localStorage.setItem("Task #" + [i], textarea.val());
+          var textArea = $("#text-" + [i]);
+          var textContent = $(textArea).val();
+          console.log(textContent);
         });
       }
     });
