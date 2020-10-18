@@ -21,50 +21,50 @@
   </header>
   <div class="container">
     <div class="time-block">
-      <div class="row" id="hour-1" data-time="09:00">
+      <div class="row" id="hour-0" data-time="09:00">
         <div class="hour">9AM</div>
-        <textarea id="text-1" type="text"></textarea>
+        <textarea id="text-0" type="text"></textarea>
+        <button class="saveBtn" id="btn-0">Save</button>
+      </div>
+      <div class="row" id="hour-1" data-time="10:00">
+        <div class="hour">10AM</div>
+        <textarea id="text-1"></textarea>
         <button class="saveBtn" id="btn-1">Save</button>
       </div>
-      <div class="row" id="hour-2" data-time="10:00">
-        <div class="hour">10AM</div>
+      <div class="row" id="hour-2" data-time="11:00">
+        <div class="hour">11AM</div>
         <textarea id="text-2"></textarea>
         <button class="saveBtn" id="btn-2">Save</button>
       </div>
-      <div class="row" id="hour-3" data-time="11:00">
-        <div class="hour">11AM</div>
+      <div class="row" id="hour-3" data-time="12:00">
+        <div class="hour">12PM</div>
         <textarea id="text-3"></textarea>
         <button class="saveBtn" id="btn-3">Save</button>
       </div>
-      <div class="row" id="hour-4" data-time="12:00">
-        <div class="hour">12PM</div>
+      <div class="row" id="hour-4" data-time="13:00">
+        <div class="hour">1PM</div>
         <textarea id="text-4"></textarea>
         <button class="saveBtn" id="btn-4">Save</button>
       </div>
-      <div class="row" id="hour-5" data-time="13:00">
-        <div class="hour">1PM</div>
+      <div class="row" id="hour-5" data-time="14:00">
+        <div class="hour">2PM</div>
         <textarea id="text-5"></textarea>
         <button class="saveBtn" id="btn-5">Save</button>
       </div>
-      <div class="row" id="hour-6" data-time="14:00">
-        <div class="hour">2PM</div>
+      <div class="row" id="hour-6" data-time="15:00">
+        <div class="hour">3PM</div>
         <textarea id="text-6"></textarea>
         <button class="saveBtn" id="btn-6">Save</button>
       </div>
-      <div class="row" id="hour-7" data-time="15:00">
-        <div class="hour">3PM</div>
+      <div class="row" id="hour-7" data-time="16:00">
+        <div class="hour">4PM</div>
         <textarea id="text-7"></textarea>
         <button class="saveBtn" id="btn-7">Save</button>
       </div>
-      <div class="row" id="hour-8" data-time="16:00">
-        <div class="hour">4PM</div>
+      <div class="row" id="hour-8" data-time="17:00">
+        <div class="hour">5PM</div>
         <textarea id="text-8"></textarea>
         <button class="saveBtn" id="btn-8">Save</button>
-      </div>
-      <div class="row" id="hour-9" data-time="17:00">
-        <div class="hour">5PM</div>
-        <textarea id="text-9"></textarea>
-        <button class="saveBtn" id="btn-9">Save</button>
       </div>
     </div>
   </div>
@@ -75,6 +75,8 @@
 
     $(document).ready(function () {
 
+      init();
+
       //Gets current day and time
       var date = moment().format('dddd MMMM Do');
       var currentDay = $("#currentDay");
@@ -84,7 +86,7 @@
       console.log(time);
 
       // Colors areas based on time.
-      for (var i = 1; i < 10; i++) {
+      for (var i = 0; i < 9; i++) {
 
         var dataTime = $("#hour-" + [i]).attr("data-time");
         var nextIndex = [i + 1];
@@ -105,14 +107,43 @@
 
       }
 
-      //Something with "this" might help here?
-      for (var i = 1; i < 10; i++) {
+      var tasks = [];
+      //Works?
+      for (var i = 0; i < 9; i++) {
         $("#btn-" + [i]).on("click", function () {
-          var textArea = $("#text-" + [i]);
-          var textContent = $(textArea).val();
-          console.log(textContent);
+          var parentDiv = $(this).parent();
+          var thisTextArea = $(parentDiv).children().eq(1);
+          var textAreaContent = $(thisTextArea).val();
+          console.log(textAreaContent);
+          tasks.push(textAreaContent);
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+          console.log(localStorage);
         });
       }
+
+      function init() {
+        var storedTasks = localStorage.getItem("tasks");
+
+        if (storedTasks !== null) {
+          tasks = storedTasks;
+        }
+        renderTasks();
+      };
+
+      function renderTasks() {
+        // Doesn't work.
+        //$("<textarea>").val() = "";
+          console.log("tasks: " + tasks);
+        for (var i = 0; i < tasks.length; i++) {
+          var task = tasks[i];
+          console.log(task);
+          //Task comes out as individual letters.
+          //Need to parse then re-string?
+          var taskDiv = $("#text-" + [i]);
+          //This is part of the problem.
+          // taskDiv.val() = task;
+        }
+      };
     });
   </script>
 </body>
