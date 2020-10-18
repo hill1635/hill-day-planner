@@ -77,17 +77,13 @@
 
       init();
 
-      //Gets current day and time
       var date = moment().format('dddd MMMM Do');
       var currentDay = $("#currentDay");
       currentDay.text(date);
 
       var time = moment().format('HH:mm');
-      console.log(time);
 
-      // Colors areas based on time.
       for (var i = 0; i < 9; i++) {
-
         var dataTime = $("#hour-" + [i]).attr("data-time");
         var nextIndex = [i + 1];
         var nextTime = $("#hour-" + nextIndex).attr("data-time");
@@ -104,45 +100,27 @@
         if (time < dataTime) {
           $(textArea).attr("class", "future");
         }
-
       }
 
       var tasks = [];
-      //Works?
       for (var i = 0; i < 9; i++) {
         $("#btn-" + [i]).on("click", function () {
           var parentDiv = $(this).parent();
           var thisTextArea = $(parentDiv).children().eq(1);
           var textAreaContent = $(thisTextArea).val();
-          console.log(textAreaContent);
           tasks.push(textAreaContent);
           localStorage.setItem("tasks", JSON.stringify(tasks));
+          console.log(tasks);
           console.log(localStorage);
         });
       }
 
       function init() {
-        var storedTasks = localStorage.getItem("tasks");
-
+        var storedTasks = JSON.parse(localStorage.getItem("tasks"));
         if (storedTasks !== null) {
           tasks = storedTasks;
         }
-        renderTasks();
-      };
-
-      function renderTasks() {
-        // Doesn't work.
-        //$("<textarea>").val() = "";
-          console.log("tasks: " + tasks);
-        for (var i = 0; i < tasks.length; i++) {
-          var task = tasks[i];
-          console.log(task);
-          //Task comes out as individual letters.
-          //Need to parse then re-string?
-          var taskDiv = $("#text-" + [i]);
-          //This is part of the problem.
-          // taskDiv.val() = task;
-        }
+        console.log(storedTasks);
       };
     });
   </script>
