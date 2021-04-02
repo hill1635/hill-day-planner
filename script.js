@@ -1,11 +1,17 @@
 $(document).ready(function () {
-  init();
-
   var date = moment().format("dddd MMMM Do");
   var currentDay = $("#currentDay");
+  var time = moment().format("HH:mm");
+  var tasks = [];
   currentDay.text(date);
 
-  var time = moment().format("HH:mm");
+  function init() {
+    var storedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (storedTasks !== null) {
+      tasks = storedTasks;
+    }
+  }
+  init();
 
   for (var i = 0; i < 9; i++) {
     var dataTime = $("#hour-" + [i]).attr("data-time");
@@ -26,7 +32,6 @@ $(document).ready(function () {
     }
   }
 
-  var tasks = [];
   for (var i = 0; i < 9; i++) {
     $("#btn-" + [i]).on("click", function () {
       var parentDiv = $(this).parent();
@@ -34,16 +39,6 @@ $(document).ready(function () {
       var textAreaContent = $(thisTextArea).val();
       tasks.push(textAreaContent);
       localStorage.setItem("tasks", JSON.stringify(tasks));
-      console.log(tasks);
-      console.log(localStorage);
     });
-  }
-
-  function init() {
-    var storedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (storedTasks !== null) {
-      tasks = storedTasks;
-    }
-    console.log(storedTasks);
   }
 });
