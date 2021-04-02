@@ -19,15 +19,11 @@ $(document).ready(function () {
     var nextTime = $("#hour-" + nextIndex).attr("data-time");
     var textArea = $("#text-" + [i]);
 
-    if (time > dataTime) {
-      $(textArea).attr("class", "past");
-    }
-
     if (time >= dataTime && time < nextTime) {
       $(textArea).attr("class", "present");
-    }
-
-    if (time < dataTime) {
+    } else if (time > dataTime) {
+      $(textArea).attr("class", "past");
+    } else if (time < dataTime) {
       $(textArea).attr("class", "future");
     }
   }
