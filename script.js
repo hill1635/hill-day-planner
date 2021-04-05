@@ -10,6 +10,7 @@ $(document).ready(function () {
     if (storedTasks !== null) {
       tasks = storedTasks;
     }
+    console.log(storedTasks);
   }
   init();
 
@@ -28,33 +29,11 @@ $(document).ready(function () {
     } else if (time < hour) {
       $(textInput).attr("class", "future");
     }
-    // console.log("nextDiv: ", nextDiv);
-    // console.log("textInput: ", textInput);
-    // console.log("btn: ", btn);
-    // console.log("hour: ", hour);
-  }
 
-  // for (var i = 0; i < 9; i++) {
-  //   var dataTime = $("#hour-" + [i]).attr("data-time");
-  //   var nextIndex = [i + 1];
-  //   var nextTime = $("#hour-" + nextIndex).attr("data-time");
-  //   var textArea = $("#text-" + [i]);
-
-  //   if (time >= dataTime && time < nextTime) {
-  //     $(textArea).attr("class", "present");
-  //   } else if (time > dataTime) {
-  //     $(textArea).attr("class", "past");
-  //   } else if (time < dataTime) {
-  //     $(textArea).attr("class", "future");
-  //   }
-  // }
-
-  for (var i = 0; i < 9; i++) {
-    $("#btn-" + [i]).on("click", function () {
-      var parentDiv = $(this).parent();
-      var thisTextArea = $(parentDiv).children().eq(1);
-      var textAreaContent = $(thisTextArea).val();
-      tasks.push(textAreaContent);
+    $(btn).on("click", function () {
+      var parentDiv = $(this).parent().children();
+      var task = $(parentDiv[1]).val();
+      tasks.push(task);
       localStorage.setItem("tasks", JSON.stringify(tasks));
     });
   }
