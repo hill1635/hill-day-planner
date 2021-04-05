@@ -23,11 +23,11 @@ $(document).ready(function () {
     var nextHour = $(nextDiv).attr("data-time");
 
     if (time >= hour && time < nextHour) {
-      $(textInput).attr("class", "present");
+      $(textInput).attr("style", "background-color:#ff6961");
     } else if (time > hour) {
-      $(textInput).attr("class", "past");
+      $(textInput).attr("style", "background-color:#d3d3d3");
     } else if (time < hour) {
-      $(textInput).attr("class", "future");
+      $(textInput).attr("style", "background-color:#77dd77");
     }
 
     $(btn).on("click", function () {
