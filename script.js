@@ -33,7 +33,12 @@ $(document).ready(function () {
     $(btn).on("click", function () {
       var parentDiv = $(this).parent().children();
       var task = $(parentDiv[1]).val();
-      tasks.push(task);
+      var dataTime = $(parentDiv).parent().attr("data-time");
+      var savedNote = {
+        task: task,
+        dataTime: dataTime
+      };
+      tasks.push(savedNote);
       localStorage.setItem("tasks", JSON.stringify(tasks));
     });
   }
