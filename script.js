@@ -10,7 +10,6 @@ $(document).ready(function () {
     if (storedTasks !== null) {
       tasks = storedTasks;
     }
-    console.log(storedTasks);
   }
   init();
 
@@ -29,6 +28,12 @@ $(document).ready(function () {
     } else if (time < hour) {
       $(textInput).attr("style", "background-color:#77dd77");
     }
+
+    tasks.forEach((task) => {
+      if (hour == task.dataTime) {
+      textInput.value = task.task;
+      }
+    });
 
     $(btn).on("click", function () {
       var parentDiv = $(this).parent().children();
